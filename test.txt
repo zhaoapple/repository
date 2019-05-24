@@ -1,1 +1,2 @@
 create new txt
+delete txt
