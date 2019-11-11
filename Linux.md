@@ -96,9 +96,55 @@ yum -y install mysql-community-server
 systemctl start  mysqld.service
 systemctl status mysqld.service
 grep "password" /var/log/mysqld.log
+mysql -uroot -p     # 回车后会提示输入密码
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'z?guwrBhH7p>';
+
+SHOW VARIABLES LIKE 'validate_password%';
+ set global validate_password_policy=LOW; 
+set global validate_password_policy=0;
+
+set global validate_password_length=1;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+
+grant all on *.* to root@'%' identified by '123456';
 ```
 
+```shell
+原因：没有开放3306端口。
 
+执行一下命令：
+
+systemctl stop firewalld
+systemctl mask firewalld
+
+并且安装iptables-services：
+yum install iptables-services
+
+设置开机启动：
+systemctl enable iptables
+
+systemctl stop iptables
+systemctl start iptables
+systemctl restart iptables
+systemctl reload iptables
+
+保存设置：
+service iptables save
+
+OK，再试一下应该就好使了
+
+开放某个端口 在/etc/sysconfig/iptables里添加
+
+模仿22端口开发3306
+
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+
+```
+
+```shell
+ping ip
+telnet ip 端口
+```
 
 
 
