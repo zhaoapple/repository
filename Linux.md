@@ -8,6 +8,8 @@
 
 Ctrl+Alt+T打开终端，在终端中创建新标签：Shift+Ctrl+t
 
+git add . && git commit -m "mysql" && git push
+
 ## 2.命令
 
 查看java安装目录：
